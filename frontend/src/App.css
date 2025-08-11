@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+/* body { @apply bg-gray-50 text-gray-800; } */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+/* #root {
+  background-color: black;
+  color: wheat;
+} */
