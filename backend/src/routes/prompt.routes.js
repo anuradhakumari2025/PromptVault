@@ -8,23 +8,24 @@ const {
   updatePrompt,
   createPrompt,
 } = require("../controllers/prompt.controller");
+const { authUser } = require("../middlewares/auth.middleware");
 const router = express.Router();
 
 // public community listing
-router.get("/community", getCommunityPrompts);
+router.get("/community",authUser, getCommunityPrompts);
 
 // personal prompts (authorId via query for now)
-router.get("/personal", getPersonalPrompts);
+router.get("/personal",authUser, getPersonalPrompts);
 
 // create / read / update / delete
-router.post("/create", createPrompt);
-router.put("/update/:id", updatePrompt);
-router.delete("/delete/:id", deletePrompt);
+router.post("/create",authUser, createPrompt);
+router.put("/update/:id",authUser, updatePrompt);
+router.delete("/delete/:id",authUser, deletePrompt);
 
 // vote
-router.post("/:id/vote", votePrompt);
+router.post("/:id/vote",authUser, votePrompt);
 
 // export
-router.post("/export", exportPrompts);
+router.post("/export",authUser, exportPrompts);
 
 module.exports = router;

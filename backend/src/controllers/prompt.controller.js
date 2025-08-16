@@ -66,7 +66,7 @@ module.exports.deletePrompt = async (req, res) => {
 /** Get prompts for user's personal vault */
 module.exports.getPersonalPrompts = async (req, res) => {
   try {
-    const author = req.query.author;
+    const author = req.user._id;
     if (!author) return res.status(400).json({ message: "author required" });
     const prompts = await Prompt.find({ author }).populate("author", "name email");
     res.json(prompts);

@@ -46,3 +46,12 @@ module.exports.loginHandler = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+module.exports.logoutUser = async(req,res)=>{
+  try {
+    res.clearCookie("token")
+  return  res.status(201).json({message:"Logout successful"})
+  } catch (error) {
+    console.log(error)
+  }
+}

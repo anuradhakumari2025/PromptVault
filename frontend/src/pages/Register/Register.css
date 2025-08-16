@@ -1,0 +1,87 @@
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: var(--primary-bg);
+  font-family: var(--font-family);
+}
+
+.register-box {
+  background: var(--secondary-bg);
+  padding: 2rem;
+  border-radius: 10px;
+  width: 450px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.5);
+}
+
+.register-box h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: var(--accent-color);
+}
+
+.register-box input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background: var(--primary-bg);
+  color: var(--text-color);
+}
+
+.register-box input:focus {
+  outline: none;
+  border-color: var(--accent-color);
+}
+
+.register-box button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  background: var(--accent-color);
+  color: var(--text-color);
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.register-box button:hover {
+  background: #357ab7;
+}
+
+.register-footer {
+  margin-top: 1rem;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.register-footer a {
+  color: var(--accent-color);
+  text-decoration: none;
+}
+
+.register-footer a:hover {
+  text-decoration: underline;
+}
+
+/* 📱 Mobile */
+@media (max-width: 720px) {
+  .register-box {
+    width: 90%;
+    padding: 1.5rem;
+  }
+
+  .register-box h2 {
+    font-size: 20px;
+  }
+}
+
+/* 📱 iPad */
+@media (max-width: 920px) {
+  .register-box {
+    width: 70%;
+  }
+}
