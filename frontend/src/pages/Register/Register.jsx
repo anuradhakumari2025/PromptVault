@@ -1,8 +1,12 @@
-import  { useState } from "react";
+import { useState } from "react";
 import "./Register.css";
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
+import { useData } from "../../context/DataContext";
+import axios from "axios";
+import { toast } from "react-toastify";
 const Register = () => {
+  const { backendUrl } = useData();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -13,10 +17,20 @@ const Register = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Register Data: ", formData);
-    // API call for register
+    try {
+      const res = await axios.post(`${backendUrl}/auth/register`, formData);
+      if (res.data) {
+        toast.success(res?.data?.message);
+        navigate("/login");
+      } else {
+        toast.error(res?.data?.message);
+      }
+    } catch (error) {
+      // console.log(error);
+      toast.error(error?.response?.data?.message);
+    }
   };
 
   return (
@@ -48,7 +62,9 @@ const Register = () => {
             onChange={handleChange}
             required
           />
-          <button type="submit" className="register-btn">Register</button>
+          <button type="submit" className="register-btn">
+            Register
+          </button>
         </form>
         <p className="register-footer">
           Already have an account? <Link to="/login">Login</Link>

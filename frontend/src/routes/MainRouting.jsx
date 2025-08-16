@@ -1,18 +1,22 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import { useData } from "../../context/DataContext";
+import { useData } from "../context/DataContext";
 
-import Login from "../../pages/Login/Login";
-import Register from "../../pages/Register/Register";
-import Sidebar from "../Sidebar/Sidebar";
-import Dashboard from "../../pages/Dashboard/Dashboard";
-import CommunityPrompts from "../../pages/CommunityPrompts/CommunityPrompts";
-import MyPrompts from "../../pages/MyPrompts/MyPrompts";
-import AddPrompt from "../../pages/AddPrompt/AddPrompt";
-import Tags from "../../pages/Tags/Tags";
-import Settings from "../Settings/Settings";
+import Login from "../pages/Login/Login";
+import Dashboard from "../pages/Dashboard/Dashboard";
+import CommunityPrompts from "../pages/CommunityPrompts/CommunityPrompts";
+import MyPrompts from "../pages/MyPrompts/MyPrompts";
+import AddPrompt from "../pages/AddPrompt/AddPrompt";
+import Tags from "../pages/Tags/Tags";
+import Register from "../pages/Register/Register";
+import Sidebar from "../components/Sidebar/Sidebar";
+import Settings from "../components/Settings/Settings";
 
 function PrivateRoute({ children }) {
-  const { user } = useData();
+  const { user,loading } = useData();
+  if (loading) {
+    // return spinner/placeholder while hydrating
+    return <div>Loading...</div>;
+  }
   return user ? children : <Navigate to="/login" />;
 }
 

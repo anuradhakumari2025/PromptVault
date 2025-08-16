@@ -5,6 +5,9 @@ const jwt = require("jsonwebtoken");
 module.exports.registerHandler = async (req, res) => {
   try {
     const { username, email, password } = req.body;
+    if (!username || !email || !password) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
     const isUserExists = await User.findOne({
       $or: [{ username: username }, { email: email }],
     });
@@ -19,14 +22,11 @@ module.exports.registerHandler = async (req, res) => {
     });
     const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET);
     res.cookie("token", token);
-
     res.status(200).json({ message: "User Registered Successfully", newUser });
   } catch (error) {
-    console.log(error);
+    return res.status(500).json({ message: "Server error" });
   }
 };
-
-
 
 module.exports.loginHandler = async (req, res) => {
   try {
@@ -47,11 +47,12 @@ module.exports.loginHandler = async (req, res) => {
   }
 };
 
-module.exports.logoutUser = async(req,res)=>{
+module.exports.logoutUser = async (req, res) => {
   try {
-    res.clearCookie("token")
-  return  res.status(201).json({message:"Logout successful"})
+    res.clearCookie("token");
+    return res.status(201).json({ message: "Logout successful" });
   } catch (error) {
-    console.log(error)
+    // console.log(error);
+    return res.status(500).json({ message: "Server error" });
   }
-}
+};

@@ -1,0 +1,89 @@
+:root {
+  --primary-bg: #121212;
+  --secondary-bg: #1e1e1e;
+  --accent-color: #4a90e2;
+  --text-color: #ffffff;
+  --text-muted: #aaaaaa;
+  --border-color: #333333;
+  --error-color: #e74c3c;
+  --success-color: #2ecc71;
+}
+
+.sidebar-container {
+  display: flex;
+}
+
+.menu-btn {
+  display: none;
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  z-index: 50;
+  background: var(--accent-color);
+  color: var(--text-color);
+  border: none;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.sidebar {
+  background: var(--secondary-bg);
+  color: var(--text-color);
+  min-width: 220px;
+  height: 100vh;
+  padding: 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  transition: transform 0.3s ease-in-out;
+}
+
+.sidebar h2.logo {
+  font-size: 22px;
+  margin-bottom: 20px;
+  color: var(--accent-color);
+}
+
+.sidebar nav {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sidebar nav a {
+  text-decoration: none;
+  color: var(--text-muted);
+  font-size: 16px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.sidebar nav a:hover {
+  background: var(--primary-bg);
+  color: var(--accent-color);
+}
+.nav-link.active {
+  background: var(--accent-color);
+  color: #fff;
+  font-weight: bold;
+  filter: blur(0.5px); /* 👈 blur effect */
+}
+
+/* Mobile Responsive */
+@media (max-width: 920px) {
+  .menu-btn {
+    display: block;
+  }
+
+  .sidebar {
+    transform: translateX(-100%);
+    width: 200px;
+    z-index: 40;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+}
