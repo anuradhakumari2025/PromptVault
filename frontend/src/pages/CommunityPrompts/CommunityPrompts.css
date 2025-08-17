@@ -5,12 +5,43 @@
   min-height: 100vh;
   margin-left: 20%;
 }
-
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+.btns {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.btns button,
+.download-buttons button {
+  padding: 0.5rem 1rem;
+  background: var(--accent-color);
+  color: var(--text-color);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: background 0.3s;
+}
 .page-title {
-  font-size: 1.8rem;
-  margin-bottom: 1.5rem;
-  text-align: center;
+  font-size: 2rem;
   color: var(--accent-color);
+}
+
+.earth-text {
+  background: linear-gradient(90deg, #2c5f2d, #97bc62, #8d6e63); /* earthy tones */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
 }
 
 .community-list {
@@ -23,7 +54,7 @@
   background: var(--secondary-bg);
   padding: 1rem;
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   transition: transform 0.2s;
   display: flex;
   flex-direction: column;
@@ -68,11 +99,11 @@
   padding: 0.3rem 0.6rem;
   box-shadow: 1px 1px 4px var(--border-color);
 }
-.data-meta .data i{
+.data-meta .data i {
   display: block;
   margin-top: 2px;
 }
-.data-meta .data p{
+.data-meta .data p {
   margin-bottom: 0;
 }
 .data-meta .tags {
@@ -81,43 +112,29 @@
 .data-meta .folders {
   color: #ffd679;
 }
-.data-meta .data  p{
+.data-meta .data p {
   text-transform: capitalize;
 }
 
 .download-buttons {
   display: flex;
   gap: 0.8rem;
-  /* position: absolute; */
-  /* bottom: 10%; */
   width: 100%;
-  /* top: 80%; */
   margin-top: 1rem;
 }
 
 .download-buttons button {
   flex: 1;
-  padding: 0.5rem 0.8rem;
-  background: var(--accent-color);
-  color: var(--text-color);
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  transition: background 0.3s;
 }
 
-.download-buttons button:hover {
+.download-buttons button:hover,
+.btns button:hover {
   background: #357ac9;
 }
 
 /* Mobile Responsive */
 @media (max-width: 720px) {
-  .community-page{
+  .community-page {
     margin-left: 0;
   }
   .community-list {
@@ -127,7 +144,7 @@
 
 /* iPad Responsive */
 @media (max-width: 920px) {
-  .community-page{
+  .community-page {
     margin-left: 0;
   }
   .community-list {

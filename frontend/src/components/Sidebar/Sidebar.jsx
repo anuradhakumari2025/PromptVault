@@ -10,7 +10,6 @@ const Sidebar = () => {
     { name: "My Prompts", path: "/myprompts" },
     { name: "Community Prompts", path: "/community" },
     { name: "Add Prompt", path: "/addprompt" },
-    { name: "Tags", path: "/tags" },
     { name: "Settings", path: "/settings" },
   ];
 

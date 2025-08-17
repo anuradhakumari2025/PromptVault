@@ -81,7 +81,19 @@ const CommunityPrompts = () => {
 
   return (
     <div className="community-page">
-      <h2 className="page-title">🌍 Community Prompts</h2>
+      <div className="head">
+        <h2 className="page-title ">
+          <i className="ri-global-line earth-text"></i> Community Prompts
+        </h2>
+        <div className="btns">
+          <button title="Download all" onClick={() => downloadPrompt("json")}>
+            <i className="ri-download-fill"></i> JSON
+          </button>
+          <button title="Download all" onClick={() => downloadPrompt("pdf")}>
+            <i className="ri-import-fill"></i> PDF
+          </button>
+        </div>
+      </div>
 
       <div className="community-list">
         {prompts.length > 0 ? (
@@ -106,12 +118,16 @@ const CommunityPrompts = () => {
               </div>
 
               <div className="download-buttons">
-                <button title="Download"
+                <button
+                  title="Download"
                   onClick={() => downloadSinglePrompt(prompt._id, "json")}
                 >
                   <i className="ri-download-fill"></i> JSON
                 </button>
-                <button title="Download" onClick={() => downloadSinglePrompt(prompt._id, "pdf")}>
+                <button
+                  title="Download"
+                  onClick={() => downloadSinglePrompt(prompt._id, "pdf")}
+                >
                   <i className="ri-import-fill"></i> PDF
                 </button>
               </div>
@@ -120,15 +136,6 @@ const CommunityPrompts = () => {
         ) : (
           <p className="no-results">🚫 No community prompts found</p>
         )}
-        {/* <h1>slkdj</h1> */}
-        <div className="download-buttons">
-          <button title="Download all" onClick={() => downloadPrompt("json")}>
-            <i className="ri-download-fill"></i> JSON
-          </button>
-          <button title="Download all" onClick={() => downloadPrompt("pdf")}>
-            <i className="ri-import-fill"></i> PDF
-          </button>
-        </div>
       </div>
     </div>
   );

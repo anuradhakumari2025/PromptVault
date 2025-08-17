@@ -37,7 +37,7 @@
 }
 
 .logout-btn {
-  background: var(--accent-color);
+  background: var(--error-color);
   color: #fff;
 }
 

@@ -13,7 +13,7 @@ function Dashboard() {
             {theme === "light" ? <i className="ri-moon-line"></i> : <i className="ri-sun-fill"></i>}
           </button>
           <button onClick={logout} className="logout-btn">
-            Logout
+            Logout <i className="ri-logout-box-r-line"></i>
           </button>
         </div>
       </header>
