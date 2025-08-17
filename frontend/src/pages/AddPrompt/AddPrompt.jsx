@@ -1,13 +1,17 @@
-import "./AddPrompt.css"
+import { useData } from "../../context/DataContext";
+import "./AddPrompt.css";
 import { useState } from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 export default function AddPrompt() {
+  const { backendUrl } = useData();
   const [formData, setFormData] = useState({
     title: "",
     content: "",
-    category: "",
+    category: "Coding",
     tags: [],
-    tagMode: "manual",
+    tagMode: "ai",
     visibility: "personal",
   });
 
@@ -25,9 +29,29 @@ export default function AddPrompt() {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
+    try {
+      const res = await axios.post(`${backendUrl}/prompts/add`, formData, {
+        withCredentials: true,
+      });
+      if (res.data) {
+        setFormData({
+          title: "",
+          content: "",
+          category: "Coding",
+          tags: [],
+          tagMode: "ai",
+          visibility: "personal",
+        });
+
+        toast.success(res.data.message);
+      } else {
+        toast.error(res?.data?.message);
+      }
+    } catch (error) {
+      toast.error(error?.response?.data?.message);
+    }
   };
 
   return (
@@ -59,22 +83,21 @@ export default function AddPrompt() {
 
         {/* Category */}
         <label>Category</label>
-        <input
-          type="text"
-          name="category"
+        <select
+          name="tagMode"
           value={formData.category}
           onChange={handleChange}
-          placeholder="e.g. Coding, Marketing, Education"
-          required
-        />
+        >
+          <option value="Coding">Coding</option>
+          <option value="Design">Design</option>
+          <option value="Education">Education</option>
+          <option value="Marketing">Marketing</option>
+           <option value="AI Tools">AI Tools</option>
+        </select>
 
         {/* Tag Mode */}
         <label>Tag Mode</label>
-        <select
-          name="tagMode"
-          value={formData.tagMode}
-          onChange={handleChange}
-        >
+        <select name="tagMode" value={formData.tagMode} onChange={handleChange}>
           <option value="manual">Manual</option>
           <option value="ai">AI Generated</option>
         </select>
@@ -123,4 +146,3 @@ export default function AddPrompt() {
     </div>
   );
 }
-

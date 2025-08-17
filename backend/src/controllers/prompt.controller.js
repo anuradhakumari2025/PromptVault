@@ -8,33 +8,39 @@ module.exports.createPrompt = async (req, res) => {
     const {
       title,
       content,
+      category,
       tags = [],
       visibility = "personal",
-      author,
-      useAiTagging,
+      tagMode,
     } = req.body;
-    if (!title || !content || !author)
+    if (!title || !content || !category)
       return res.status(400).json({ message: "Missing fields" });
 
     let finalTags = tags;
-    if (useAiTagging) {
+    if (tagMode == "ai") {
       const aiTags = await generateTag(content);
-      finalTags = Array.from(new Set([...tags, ...aiTags])).slice(0, 10);
+      finalTags = Array.from(new Set([...tags, ...aiTags]));
+    }
+    if (tagMode == "manual") {
+      finalTags = Array.from(new Set([...tags]));
     }
 
     const prompt = await Prompt.create({
       title,
       content,
+      category,
       tags: finalTags,
+      tagMode,
       visibility,
-      author,
+      author: req.user._id,
     });
-    // await prompt.save();
 
-    res.status(201).json(prompt);
+    return res
+      .status(201)
+      .json({ message: "Prompt Added successfully", prompt });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Server error" });
+    return res.status(500).json({ message: "Server error" });
   }
 };
 
@@ -58,7 +64,7 @@ module.exports.deletePrompt = async (req, res) => {
     await Prompt.findByIdAndDelete(id);
     res.json({ message: "Deleted" });
   } catch (err) {
-    console.log(err)
+    console.log(err);
     res.status(500).json({ message: "Server error" });
   }
 };
@@ -68,7 +74,10 @@ module.exports.getPersonalPrompts = async (req, res) => {
   try {
     const author = req.user._id;
     if (!author) return res.status(400).json({ message: "author required" });
-    const prompts = await Prompt.find({ author }).populate("author", "name email");
+    const prompts = await Prompt.find({ author }).populate(
+      "author",
+      "name email"
+    );
     res.json(prompts);
   } catch (err) {
     res.status(500).json({ message: "Server error" });
@@ -115,8 +124,11 @@ module.exports.votePrompt = async (req, res) => {
 /** Export prompts */
 module.exports.exportPrompts = async (req, res) => {
   try {
-    const { author, format = "json" } = req.body;
-    if (!author) return res.status(400).json({ message: "author required" });
+    const { format } = req.body;
+    if (!format) {
+      return res.status(400).json({ message: "Format is required" });
+    }
+    const author = req.user._id;
 
     const prompts = await Prompt.find({ author }).sort({ createdAt: -1 });
 
@@ -135,5 +147,38 @@ module.exports.exportPrompts = async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });
+  }
+};
+
+// backend/controllers/promptController.js
+module.exports.exportSinglePrompt = async (req, res) => {
+  try {
+    const { id, format } = req.body;
+    const author = req.user._id;
+
+    if (!id || !format) {
+      return res.status(400).json({ message: "id and format required" });
+    }
+
+    const prompt = await Prompt.findOne({ _id: id, author });
+    if (!prompt) {
+      return res.status(404).json({ message: "Prompt not found" });
+    }
+
+    let data;
+    if (format === "json") {
+      data = JSON.stringify(exportToJSON([prompt]), null, 2);
+      res.setHeader("Content-Disposition", "attachment; filename=prompt.json");
+      res.setHeader("Content-Type", "application/json");
+    } else if (format === "pdf") {
+      // yahan tum PDF export ka code likh chuki ho backend me
+      const buffer = await exportToPDFBuffer([prompt]); // wrap in array for compatibility
+      res.setHeader("Content-Type", "application/pdf");
+      res.setHeader("Content-Disposition", "attachment; filename=prompt.pdf");
+      return res.send(buffer);
+    }
+   return res.send(data);
+  } catch (error) {
+   return res.status(500).json({ message: error.message });
   }
 };

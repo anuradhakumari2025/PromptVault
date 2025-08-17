@@ -1,15 +1,21 @@
 import { useData } from "../../context/DataContext";
-import "./Dashboard.css"
+import "./Dashboard.css";
+
 function Dashboard() {
-  const { user, logout } = useData();
+  const { user, logout ,theme, toggleTheme} = useData();
 
   return (
     <div className="dashboard">
       <header className="dashboard-header">
         <h1>Welcome, {user?.username || "User"} 👋</h1>
-        <button onClick={logout} className="logout-btn">
-          Logout
-        </button>
+        <div className="header-actions">
+          <button onClick={toggleTheme} className="theme-btn">
+            {theme === "light" ? <i className="ri-moon-line"></i> : <i className="ri-sun-fill"></i>}
+          </button>
+          <button onClick={logout} className="logout-btn">
+            Logout
+          </button>
+        </div>
       </header>
 
       <section className="dashboard-content">

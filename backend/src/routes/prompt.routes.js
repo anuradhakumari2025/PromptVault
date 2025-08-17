@@ -7,6 +7,7 @@ const {
   deletePrompt,
   updatePrompt,
   createPrompt,
+  exportSinglePrompt,
 } = require("../controllers/prompt.controller");
 const { authUser } = require("../middlewares/auth.middleware");
 const router = express.Router();
@@ -18,7 +19,7 @@ router.get("/community",authUser, getCommunityPrompts);
 router.get("/personal",authUser, getPersonalPrompts);
 
 // create / read / update / delete
-router.post("/create",authUser, createPrompt);
+router.post("/add",authUser, createPrompt);
 router.put("/update/:id",authUser, updatePrompt);
 router.delete("/delete/:id",authUser, deletePrompt);
 
@@ -27,5 +28,7 @@ router.post("/:id/vote",authUser, votePrompt);
 
 // export
 router.post("/export",authUser, exportPrompts);
+router.post("/export-single", authUser, exportSinglePrompt);
+
 
 module.exports = router;

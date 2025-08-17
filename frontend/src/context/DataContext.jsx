@@ -12,6 +12,17 @@ export const DataProvider = ({ children }) => {
 
   const navigate = useNavigate();
 
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === "light" ? "dark" : "light"));
+  };
+
   useEffect(() => {
     const saved = localStorage.getItem("user");
     if (saved) setUser(JSON.parse(saved));
@@ -21,7 +32,7 @@ export const DataProvider = ({ children }) => {
 
   const login = (userData) => {
     setUser(userData);
-    localStorage.setItem("user", JSON.stringify(userData)); // keep in sync
+    localStorage.setItem("user", JSON.stringify(userData)); 
   };
   const logout = () => {
     setUser(null);
@@ -29,7 +40,7 @@ export const DataProvider = ({ children }) => {
     navigate("/login");
   };
   return (
-    <DataContext.Provider value={{ backendUrl, user, login, logout, navigate,loading }}>
+    <DataContext.Provider value={{ backendUrl, user, login, logout, navigate,loading,theme, toggleTheme }}>
       {children}
     </DataContext.Provider>
   );

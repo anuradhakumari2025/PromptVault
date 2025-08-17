@@ -6,7 +6,6 @@ import Dashboard from "../pages/Dashboard/Dashboard";
 import CommunityPrompts from "../pages/CommunityPrompts/CommunityPrompts";
 import MyPrompts from "../pages/MyPrompts/MyPrompts";
 import AddPrompt from "../pages/AddPrompt/AddPrompt";
-import Tags from "../pages/Tags/Tags";
 import Register from "../pages/Register/Register";
 import Sidebar from "../components/Sidebar/Sidebar";
 import Settings from "../components/Settings/Settings";
@@ -30,7 +29,6 @@ function Layout() {
           <Route path="/myprompts" element={<MyPrompts />} />
           <Route path="/community" element={<CommunityPrompts />} />
           <Route path="/addprompt" element={<AddPrompt />} />
-          <Route path="/tags" element={<Tags />} />
           <Route path="/settings" element={<Settings />} />
         </Routes>
       </div>
